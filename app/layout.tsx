@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${monaSans.className} antialiased`}>
+      <body className={`${monaSans.className} antialiased pattern`}>
         {children}
       </body>
     </html>
