@@ -5,26 +5,42 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Form } from "./ui/form"
 import Image from "next/image"
+import { Button } from "./ui/button"
+import Link from "next/link"
+import { FormField } from "./FormField"
 
-const formSchema = z.object({
-    username: z.string().min(2, { message: "Username must be at least 2 characters." }),
-})
+const authFormSchema = (type: FormType) => {
+    return z.object({
+        name: type === "sign-up" ? z.string().min(3) : z.string().optional(),
+        email: z.string().email(),
+        password: z.string().min(3),
+    })
+}
 
 
-export function AuthForm({ type }: { type: string }) {
+export function AuthForm({ type }: { type: FormType }) {
 
+    const formSchema = authFormSchema(type);
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            username: "",
+            name: "",
+            email: "",
+            password: "",
         },
     })
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+        try {
+            console.log(values)
+        }
+        catch (error) {
+            console.log(error);
+
+        }
     }
 
-    const isSignIn = type === 'sign-in'
+    const isSignIn: boolean = type === 'sign-in'
 
     return (
         <div className="card-border lg:min-w-[566px]">
@@ -35,12 +51,46 @@ export function AuthForm({ type }: { type: string }) {
                 </div>
                 <h3 className="text-center">Practice job interview with AI</h3>
 
-
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 mt-4 form">
-                        
+                        {!isSignIn && (
+                            <FormField
+                                control={form.control}
+                                name="name"
+                                label="Name"
+                                placeholder="Your Name"
+                                type="text"
+                            />
+                        )}
+
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            label="Email"
+                            placeholder="Your email address"
+                            type="email"
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="password"
+                            label="Password"
+                            placeholder="Enter your password"
+                            type="password"
+                        />
+
+                        <Button className="btn" type="submit">
+                            {isSignIn ? "Sign In" : "Create an Account"}
+                        </Button>
                     </form>
                 </Form>
+
+                <p className="text-center">
+                    {isSignIn ? "No account yet?" : "Have an account already?"}
+                    <Link href={!isSignIn ? "/sign-in" : "/sign-up"} className="font-bold text-user-primary ml-1">
+                        {!isSignIn ? "Sign In" : "Sign Up"}
+                    </Link>
+                </p>
             </div>
         </div>
     )
