@@ -37,7 +37,12 @@ export default function Home() {
         <h2>Take an interview</h2>
 
         <div className="interviews-section">
-          <p>There are no interviews available</p>
+          {
+            dummyInterviews?.map(interview => (
+              <InterviewCard key={interview.id} {...interview} />
+            ))
+          }
+          {/* <p>There are no interviews available</p> */}
         </div>
       </section>
     </>
