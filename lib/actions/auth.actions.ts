@@ -3,7 +3,7 @@
 import { auth, db } from "@/firebase/admin";
 import { cookies } from "next/headers";
 
-const SESSION_DURATION = 60 * 60 * 24 * 7;
+const SESSION_DURATION = 60 * 60 * 24 * 5 * 1000;
 
 export async function signup(params: SignUpParams) {
     const { uid, name, email } = params;
