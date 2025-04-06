@@ -67,3 +67,8 @@ interface SavedMessage {
     role: "user" | "system" | "assistant";
     content: string;
 }
+
+interface GetLatestInterviewsParams {
+    userId: string;
+    limit?: number;
+}
