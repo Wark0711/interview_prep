@@ -13,7 +13,7 @@ interface Interview {
 }
 
 interface InterviewCardProps {
-    interviewId?: string;
+    id?: string;
     userId?: string;
     role: string;
     type: string;
@@ -71,4 +71,30 @@ interface SavedMessage {
 interface GetLatestInterviewsParams {
     userId: string;
     limit?: number;
+}
+
+interface RouteParams {
+    params: Promise<Record<string, string>>;
+    searchParams: Promise<Record<string, string>>;
+}
+
+interface CreateFeedbackParams {
+    interviewId: string;
+    userId: string;
+    transcript: { role: string; content: string }[];
+    feedbackId?: string;
+}
+
+interface GetFeedbackByInterviewIdParams {
+    interviewId: string;
+    userId: string;
+}
+
+interface InterviewFormProps {
+    interviewId: string;
+    role: string;
+    level: string;
+    type: string;
+    techstack: string[];
+    amount: number;
 }
